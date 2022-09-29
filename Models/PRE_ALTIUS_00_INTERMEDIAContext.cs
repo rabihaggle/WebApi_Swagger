@@ -16,6 +16,7 @@ namespace WebApi1.Models
         {
         }
 
+        public virtual DbSet<OperacionesAProcesar> OperacionesAProcesars { get; set; } = null!;
         public virtual DbSet<_00Operacione> _00Operaciones { get; set; } = null!;
         public virtual DbSet<_00OperacionesMovimientosAut> _00OperacionesMovimientosAuts { get; set; } = null!;
 
@@ -30,6 +31,29 @@ namespace WebApi1.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<OperacionesAProcesar>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("Operaciones_a_Procesar");
+
+                entity.Property(e => e.CodMatriculaContenedor)
+                    .HasMaxLength(50)
+                    .HasColumnName("Cod_Matricula_Contenedor");
+
+                entity.Property(e => e.Flujo).HasMaxLength(50);
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Navieras).HasMaxLength(50);
+
+                entity.Property(e => e.NumeroOperacion)
+                    .HasMaxLength(50)
+                    .HasColumnName("Numero_Operacion");
+            });
+
             modelBuilder.Entity<_00Operacione>(entity =>
             {
                 entity.ToTable("00_Operaciones");

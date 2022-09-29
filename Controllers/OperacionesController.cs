@@ -33,7 +33,7 @@ namespace WebApi1.Controllers
         {
            
             IEnumerable<Models._00Operacione> op = _context._00Operaciones
-                .Where(b => !b.CodMatriculaContenedor.Contains("-"));
+                .Where(b => !b.CodMatriculaContenedor.Contains("-")).ToList();
             return op;
 
 
