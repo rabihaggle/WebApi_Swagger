@@ -29,11 +29,24 @@ namespace WebApi1.Controllers
         }
 
         [HttpGet("getContenedores", Name = "getContenedores")]
-        public IEnumerable<Models._00Operacione> getContenedores()
+        public IEnumerable<Models.OperacionesAProcesar> getContenedores()
         {
-           
-            IEnumerable<Models._00Operacione> op = _context._00Operaciones
-                .Where(b => !b.CodMatriculaContenedor.Contains("-")).ToList();
+
+            IEnumerable<Models.OperacionesAProcesar> op = _context.OperacionesAProcesars
+                .ToList();
+
+            return op;
+
+
+        }
+
+        [HttpGet("getContenedoresdist", Name = "getContenedoresdist")]
+        public IEnumerable<Models.DistinctOpContainerNav> getContenedoresdist()
+        {
+
+            IEnumerable<Models.DistinctOpContainerNav> op = _context.DistinctOpContainerNavs
+                .ToList();
+
             return op;
 
 

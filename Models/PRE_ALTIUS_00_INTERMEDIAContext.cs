@@ -16,7 +16,10 @@ namespace WebApi1.Models
         {
         }
 
+        public virtual DbSet<DatosParaProcesar> DatosParaProcesars { get; set; } = null!;
+        public virtual DbSet<DistinctOpContainerNav> DistinctOpContainerNavs { get; set; } = null!;
         public virtual DbSet<OperacionesAProcesar> OperacionesAProcesars { get; set; } = null!;
+        public virtual DbSet<RnkMovOpe> RnkMovOpes { get; set; } = null!;
         public virtual DbSet<_00Operacione> _00Operaciones { get; set; } = null!;
         public virtual DbSet<_00OperacionesMovimientosAut> _00OperacionesMovimientosAuts { get; set; } = null!;
 
@@ -31,6 +34,72 @@ namespace WebApi1.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<DatosParaProcesar>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("Datos_Para_Procesar");
+
+                entity.Property(e => e.CodMatriculaContenedor)
+                    .HasMaxLength(50)
+                    .HasColumnName("Cod_Matricula_Contenedor");
+
+                entity.Property(e => e.DiffAct).HasColumnName("Diff_ACT");
+
+                entity.Property(e => e.Evento).HasMaxLength(50);
+
+                entity.Property(e => e.FechaActual)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Fecha_Actual");
+
+                entity.Property(e => e.FechaActualTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Fecha_actual_time");
+
+                entity.Property(e => e.FechaActualizaciónRegistro)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Fecha_Actualización_Registro");
+
+                entity.Property(e => e.FechaExpec)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Fecha_Expec");
+
+                entity.Property(e => e.FechaExpectedTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Fecha_expected_time");
+
+                entity.Property(e => e.FectAct)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Fect_act");
+
+                entity.Property(e => e.Navieras).HasMaxLength(50);
+
+                entity.Property(e => e.NumeroOperacion)
+                    .HasMaxLength(50)
+                    .HasColumnName("Numero_Operacion");
+
+                entity.Property(e => e.TipoEvento)
+                    .HasMaxLength(50)
+                    .HasColumnName("Tipo_Evento");
+            });
+
+            modelBuilder.Entity<DistinctOpContainerNav>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("Distinct_OP_Container_Nav");
+
+                entity.Property(e => e.CodMatriculaContenedor)
+                    .HasMaxLength(50)
+                    .HasColumnName("Cod_Matricula_Contenedor");
+
+                entity.Property(e => e.Navieras).HasMaxLength(50);
+
+                entity.Property(e => e.NumeroOperacion)
+                    .HasMaxLength(50)
+                    .HasColumnName("Numero_Operacion");
+            });
+
             modelBuilder.Entity<OperacionesAProcesar>(entity =>
             {
                 entity.HasNoKey();
@@ -52,6 +121,43 @@ namespace WebApi1.Models
                 entity.Property(e => e.NumeroOperacion)
                     .HasMaxLength(50)
                     .HasColumnName("Numero_Operacion");
+            });
+
+            modelBuilder.Entity<RnkMovOpe>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("RNK_MOV_OPE");
+
+                entity.Property(e => e.DidCodMatriculaContenedor)
+                    .HasMaxLength(50)
+                    .HasColumnName("DID_Cod_Matricula_Contenedor");
+
+                entity.Property(e => e.DidNumeroOperacion)
+                    .HasMaxLength(50)
+                    .HasColumnName("DID_Numero_Operacion");
+
+                entity.Property(e => e.FechaActualTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Fecha_actual_time");
+
+                entity.Property(e => e.FechaActualizaciónRegistro)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Fecha_Actualización_Registro");
+
+                entity.Property(e => e.FechaExpectedTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("Fecha_expected_time");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Rnk).HasColumnName("rnk");
+
+                entity.Property(e => e.TipoEvento)
+                    .HasMaxLength(50)
+                    .HasColumnName("Tipo_Evento");
             });
 
             modelBuilder.Entity<_00Operacione>(entity =>
